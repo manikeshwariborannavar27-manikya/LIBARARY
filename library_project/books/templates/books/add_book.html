@@ -1,0 +1,71 @@
+{% extends "books/base.html" %}
+
+{% block title %}Add Book - Library Management{% endblock %}
+
+{% block content %}
+<h2>➕ Add New Book</h2>
+
+<form method="post" id="bookForm">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="title">Book Title *</label>
+        <input type="text" id="title" name="title" required 
+               placeholder="Enter book title" maxlength="300">
+    </div>
+
+    <div class="form-group">
+        <label for="author">Author *</label>
+        <select id="author" name="author" required>
+            <option value="">-- Select Author --</option>
+            {% for author in authors %}
+                <option value="{{ author.id }}">{{ author.name }}</option>
+            {% endfor %}
+        </select>
+        <small style="color: #666;">Don't see the author? Add it through <a href="/admin/" target="_blank">Admin Panel</a></small>
+    </div>
+
+    <div class="form-group">
+        <label for="isbn">ISBN *</label>
+        <input type="text" id="isbn" name="isbn" required 
+               placeholder="Enter 13-digit ISBN" maxlength="13" pattern="\d{10,13}">
+        <small style="color: #666;">13-digit ISBN required and must be unique</small>
+    </div>
+
+    <div class="form-group">
+        <label for="published">Published Date *</label>
+        <input type="date" id="published" name="published" required>
+    </div>
+
+    <div class="form-group">
+        <label for="available">
+            <input type="checkbox" id="available" name="available" checked>
+            Available (check if book is available)
+        </label>
+    </div>
+
+    <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Save Book</button>
+        <a href="{% url 'books_list' %}" class="btn btn-secondary">❌ Cancel</a>
+    </div>
+</form>
+
+<script>
+    document.getElementById('bookForm').addEventListener('submit', function(e) {
+        const title = document.getElementById('title').value.trim();
+        const isbn = document.getElementById('isbn').value.trim();
+        
+        if (!title) {
+            e.preventDefault();
+            alert('Please enter book title');
+            return false;
+        }
+        
+        if (!/^\d{10,13}$/.test(isbn)) {
+            e.preventDefault();
+            alert('ISBN must be 10 or 13 digits');
+            return false;
+        }
+    });
+</script>
+{% endblock %}

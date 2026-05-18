@@ -1,0 +1,51 @@
+{% extends "books/base.html" %}
+
+{% block title %}Library Home{% endblock %}
+
+{% block content %}
+<h2>Welcome to Library Management System</h2>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>{{ books_count }}</h3>
+        <p>Total Books</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ authors_count }}</h3>
+        <p>Authors</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ available_count }}</h3>
+        <p>Available Books</p>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <strong>👋 Welcome!</strong> Manage your library books efficiently with our simple and clean interface.
+</div>
+
+<div style="margin-top: 30px;">
+    <h3>Quick Actions:</h3>
+    <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <a href="{% url 'books_list' %}" class="btn btn-primary">📖 View All Books</a>
+        <a href="{% url 'add_book' %}" class="btn btn-success">➕ Add New Book</a>
+        <a href="/api/" class="btn btn-secondary">🔌 API Documentation</a>
+    </div>
+</div>
+
+<div style="margin-top: 40px; padding: 20px; background: #f5f5f5; border-radius: 5px;">
+    <h3>📝 API Endpoints:</h3>
+    <p style="margin-top: 10px; color: #555;">
+        The API is available at <strong>/api/</strong> with the following endpoints:
+    </p>
+    <ul style="margin: 15px 0 0 20px; color: #666;">
+        <li><strong>GET /api/books/</strong> - List all books</li>
+        <li><strong>POST /api/books/</strong> - Create a new book</li>
+        <li><strong>GET /api/books/{id}/</strong> - Get book details</li>
+        <li><strong>PUT /api/books/{id}/</strong> - Update a book</li>
+        <li><strong>DELETE /api/books/{id}/</strong> - Delete a book</li>
+        <li><strong>GET /api/books/available/</strong> - Get available books</li>
+        <li><strong>GET /api/authors/</strong> - List all authors</li>
+    </ul>
+</div>
+{% endblock %}
